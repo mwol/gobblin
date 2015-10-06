@@ -23,9 +23,9 @@ import org.apache.avro.generic.GenericRecord;
 
 
 /**
- * Basic implementation of a filter converter for Avro data. Based on a specified values withing the avro
+ * Basic implementation of a filter converter for Avro data. Based on a specified values within the avro
  * record, it returns either the record itself or an empty record.
- * Specific filter need to subclass this class.
+ * Specific filters need to subclass this class.
  *
  * @author mwol
  */
@@ -34,15 +34,15 @@ public abstract class AbstractCustomAvroFilterConverter extends AvroToAvroConver
   protected abstract boolean accept(final GenericRecord inputRecord);
 
   @Override
-  public Schema convertSchema(final Schema inputSchema, final WorkUnitState workUnit) throws SchemaConversionException {
+  public Schema convertSchema(Schema inputSchema, WorkUnitState workUnit) throws SchemaConversionException {
     return inputSchema;
   }
 
   @Override
   public Iterable<GenericRecord> convertRecord(
-      final Schema outputSchema,
-      final GenericRecord inputRecord,
-      final WorkUnitState workUnit) throws DataConversionException {
+      Schema outputSchema,
+      GenericRecord inputRecord,
+      WorkUnitState workUnit) throws DataConversionException {
 
     if (accept(inputRecord)) {
       return new SingleRecordIterable<GenericRecord>(inputRecord);
